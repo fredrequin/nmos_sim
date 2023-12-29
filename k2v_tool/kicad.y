@@ -69,6 +69,7 @@
         if (!p) p = new std::map<int,t_sheet_st>;
         // Insert a new sheet
         int n = (int)strtoul(number, nullptr, 10);
+        t->m_name = std::string(name);
         p->insert(std::make_pair(n, std::move(*t)));
         delete t;
         // Free memory from strdup() calls
@@ -188,7 +189,6 @@
     
     static int is_bus(char *name)
     {
-        if (name[0] == '/') name++;
         for (auto it = g_buses->begin(); it != g_buses->end(); it++)
         {
             std::string s = it->first;
@@ -204,7 +204,7 @@
         return -1;
     }
 
-    static p_comps add_component(p_comps p, char *ref, char *value, char *libpart, p_props pl)
+    static p_comps add_component(p_comps p, char *ref, char *value, char *libpart, char *sheet, p_props pl)
     {
         t_comp_st obj;
         // If first element, create the list
@@ -212,6 +212,7 @@
         // Insert a new component
         obj.m_ref     = std::string(ref);     // ref (char *)
         obj.m_libpart = std::string(libpart); // libpart (char *)
+        obj.m_sheet   = std::string(sheet);   // sheet (char *)
         obj.m_props   = pl;                   // prop_list (std::map<std::string,t_prop_st> *)
         obj.m_part    = nullptr;              // filled by associate_parts_comps()
         obj.m_conns   = nullptr;              // fileed by associate_nets_pins()
@@ -221,6 +222,7 @@
         free(ref);
         free(value);
         free(libpart);
+        free(sheet);
         
         return p;
     }
@@ -286,14 +288,21 @@
         if (!p) p = new std::map<int,t_net_st>;
         // Insert a new net
         int n = (int)strtoul(code, nullptr, 10);
+        // Extract hierarchy
+        char *sig = strrchr(name, '/');
+        if (!sig) sig = name; else sig++;
         obj.m_idx    = n;                 // code (int)
         obj.m_oc     = 0;                 // filled by associate_nets_pins()
         obj.m_in     = 0;                 // filled by associate_nets_pins()
         obj.m_out    = 0;                 // filled by associate_nets_pins()
         obj.m_bdir   = 0;                 // filled by associate_nets_pins()
         obj.m_driven = false;
-        obj.m_isbus  = is_bus(name);
-        obj.m_kname  = std::string(name); // name (char *)
+        obj.m_isbus  = is_bus(sig);
+        obj.m_kname  = std::string(sig);  // name (char *)
+        *sig = 0;
+        obj.m_khier  = std::string(name); // name (char *)
+        for (int i = 0; name[i]; i++) if (name[i] == '/') name[i] = '_';
+        obj.m_vhier  = std::string(name); // name (char *)
         obj.m_vname  = "";                // filled by associate_nets_pins()
         obj.m_vbus   = "";                // filled by associate_nets_pins()
         obj.m_vtype  = net_none;          // filled by associate_nets_pins()
@@ -432,6 +441,7 @@
 %type <string_v>   pinfunction
 %type <string_v>   ref
 %type <string_v>   rev
+%type <string_v>   sheetpath
 %type <string_v>   source
 %type <string_v>   title
 %type <string_v>   tool
@@ -465,7 +475,7 @@ docs        : '(' KW_DOCS        TOK_STRING ')' { $$ = nullptr;    }
 lib         : '(' KW_LIB         TOK_STRING ')' { $$ = strdup($3); }
 logical     : '(' KW_LOGICAL     TOK_STRING ')' { $$ = nullptr;    }
 name        : '(' KW_NAME        TOK_STRING ')' { $$ = strdup($3); }
-names       : '(' KW_NAMES       TOK_STRING ')' { $$ = nullptr;    }
+names       : '(' KW_NAMES       TOK_STRING ')' { $$ = strdup($3); }
 num         : '(' KW_NUM         TOK_STRING ')' { $$ = strdup($3); }
 number      : '(' KW_NUMBER      TOK_STRING ')' { $$ = strdup($3); }
 part        : '(' KW_PART        TOK_STRING ')' { $$ = strdup($3); }
@@ -521,6 +531,7 @@ title_block : '(' KW_TITLE_BLOCK title[ti] company[co] rev[re] date[da] source[s
 {
     // Initialize the t_sheet_st structure
     p_sheet_st p = new t_sheet_st;
+    p->m_name     = "";
     p->m_title    = std::string($ti);
     p->m_company  = std::string($co);
     p->m_revision = std::string($re);
@@ -555,21 +566,21 @@ comment_list
 components : '(' KW_COMPONENTS component_list ')' { $$ = $3; }
 
 component_list
-: '(' KW_COMP ref[re] value[va] libsource[ls] prop_list[pl] sheetpath tstamps ')'
+: '(' KW_COMP ref[re] value[va] libsource[ls] prop_list[pl] sheetpath[sp] tstamps ')'
 {
-    $$ = add_component(nullptr, $re, $va, $ls, $pl);
+    $$ = add_component(nullptr, $re, $va, $ls, $sp, $pl);
 }
-| '(' KW_COMP ref[re] value[va] datasheet libsource[ls] prop_list[pl] sheetpath tstamps ')'
+| '(' KW_COMP ref[re] value[va] datasheet libsource[ls] prop_list[pl] sheetpath[sp] tstamps ')'
 {
-    $$ = add_component(nullptr, $re, $va, $ls, $pl);
+    $$ = add_component(nullptr, $re, $va, $ls, $sp, $pl);
 }
-| component_list '(' KW_COMP ref[re] value[va] libsource[ls] prop_list[pl] sheetpath tstamps ')'
+| component_list '(' KW_COMP ref[re] value[va] libsource[ls] prop_list[pl] sheetpath[sp] tstamps ')'
 { 
-    $$ = add_component($$, $re, $va, $ls, $pl);
+    $$ = add_component($$, $re, $va, $ls, $sp, $pl);
 }
-| component_list '(' KW_COMP ref[re] value[va] datasheet libsource[ls] prop_list[pl] sheetpath tstamps ')'
+| component_list '(' KW_COMP ref[re] value[va] datasheet libsource[ls] prop_list[pl] sheetpath[sp] tstamps ')'
 { 
-    $$ = add_component($$, $re, $va, $ls, $pl);
+    $$ = add_component($$, $re, $va, $ls, $sp, $pl);
 }
 ;
 
@@ -597,7 +608,7 @@ prop_list
 }
 ;
 
-sheetpath : '(' KW_SHEETPATH names tstamps ')' ;
+sheetpath : '(' KW_SHEETPATH names tstamps ')' { $$ = $3; } ;
 
 
 
@@ -716,7 +727,7 @@ static void associate_parts_comps(void)
         else if (s.compare(0, 3, "XOR" ) == 0) comp->m_flags = GATE_XOR;
         else if (s.compare(0, 4, "XNOR") == 0) comp->m_flags = GATE_XNOR;
         // Debug
-        //std::cout << comp->m_ref << " : " << comp->m_libpart << '\n';
+        //std::cout << comp->m_sheet << comp->m_ref << " : " << comp->m_libpart << '\n';
     }
     std::cout << "Found " << g_comps->size() << " instances of " << g_parts->size() << " parts\n";
 }
@@ -796,10 +807,10 @@ static void associate_nets_pins(int sh_num)
             net->m_vtype = net_wire;
             w_cnt++;
         }
-        else if (net->m_kname[0] == '/')
+        else if (net->m_khier[0])
         {
             // Named wire
-            std::string s = net->m_kname.substr(1, net->m_isbus);
+            std::string s = net->m_kname.substr(0, net->m_isbus);
             if (net->m_isbus > 0)
             {
                 auto it = std::find(bus.begin(), bus.end(), s);
@@ -807,14 +818,14 @@ static void associate_nets_pins(int sh_num)
                 {
                     int msb = g_buses->find(s)->second.m_msb;
                     int lsb = g_buses->find(s)->second.m_lsb;
-                    net->m_vbus = "[" + std::to_string(msb) + ":" + std::to_string(lsb) + "] w_" + s;
+                    net->m_vbus = "[" + std::to_string(msb) + ":" + std::to_string(lsb) + "] w" + net->m_vhier + s;
                     bus.push_back(s);
                 }
-                net->m_vname = "w_" + s + "[" + net->m_kname.substr(1 + net->m_isbus) + "]";
+                net->m_vname = "w" + net->m_vhier + s + "[" + net->m_kname.substr(net->m_isbus) + "]";
             }
             else
             {
-                net->m_vname = "w_" + s;
+                net->m_vname = "w" + net->m_vhier + s;
             }
             net->m_vtype = net_wire;
             w_cnt++;
@@ -857,6 +868,8 @@ static void associate_nets_pins(int sh_num)
                 net->m_vtype = net_input;
             }
             p_cnt++;
+            // Debug
+            //std::cout << net->m_vname << " : " << s_net_type[net->m_vtype] << "\n";
         }
         // Count the number of nodes
         n_cnt += net->m_nodes->size();
@@ -875,8 +888,7 @@ static void associate_nets_pins(int sh_num)
 
 static void emit_ports(int sh_num, FILE *fh)
 {
-    int p_cnt = 0;
-
+    char ch = ' ';
     std::cout << "Create ports...\n";
     auto s = g_sheets->find(sh_num);
     p_sheet_st sheet = &s->second;
@@ -886,23 +898,18 @@ static void emit_ports(int sh_num, FILE *fh)
         p_net_st net = &n->second;
         if (net->m_vtype > net_wire)
         {
-            p_cnt++;
             if (net->m_isbus > 0)
             {
                 if (net->m_vbus.length())
                 {
-                    if (sheet->m_ports == p_cnt)
-                        fprintf(fh, "    %s %s\n", s_net_type[net->m_vtype].c_str(), net->m_vbus.c_str());
-                    else
-                        fprintf(fh, "    %s %s,\n", s_net_type[net->m_vtype].c_str(), net->m_vbus.c_str());
+                    fprintf(fh, "    %c%s %s\n", ch, s_net_type[net->m_vtype].c_str(), net->m_vbus.c_str());
+                    ch = ',';
                 }
             }
             else
             {
-                if (sheet->m_ports == p_cnt)
-                    fprintf(fh, "    %s %s\n", s_net_type[net->m_vtype].c_str(), net->m_vname.c_str());
-                else
-                    fprintf(fh, "    %s %s,\n", s_net_type[net->m_vtype].c_str(), net->m_vname.c_str());
+                fprintf(fh, "    %c%s %s\n", ch, s_net_type[net->m_vtype].c_str(), net->m_vname.c_str());
+                ch = ',';
             }
         }
         if ((net->m_vtype == net_input) ||
