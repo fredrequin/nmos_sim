@@ -21,6 +21,7 @@ typedef std::map<int,std::string> *p_comments;
 // Sheet
 typedef struct
 {
+    std::string  m_name;
     std::string  m_title;
     std::string  m_company;
     std::string  m_revision;
@@ -104,7 +105,9 @@ typedef struct
     int          m_bdir;
     int          m_isbus;
     bool         m_driven;
+    std::string  m_khier;
     std::string  m_kname;
+    std::string  m_vhier;
     std::string  m_vname;
     std::string  m_vbus;
     t_net_type   m_vtype;
@@ -130,6 +133,7 @@ typedef struct
 {
     std::string  m_ref;     // instance
     std::string  m_libpart; // module
+    std::string  m_sheet;   // parent module
     p_props      m_props;
     p_part_st    m_part;
     p_conns      m_conns;
@@ -138,15 +142,15 @@ typedef struct
 
 typedef std::map<std::string,t_comp_st> *p_comps; // indexed by m_ref
 
-const int GATE_AND   = 0b000001;
-const int GATE_OR    = 0b000010;
-const int GATE_XOR   = 0b000100;
-const int GATE_NOT   = 0b001000;
-const int GATE_MUX   = 0b010000;
-const int GATE_BIDIR = 0b100000;
+const int GATE_AND  = 0b000001;
+const int GATE_OR   = 0b000010;
+const int GATE_XOR  = 0b000100;
+const int GATE_NOT  = 0b001000;
+const int GATE_MUX  = 0b010000;
+const int GATE_BUF  = 0b100000;
 
-const int GATE_NAND  = GATE_AND | GATE_NOT;
-const int GATE_NOR   = GATE_OR  | GATE_NOT;
-const int GATE_XNOR  = GATE_XOR | GATE_NOT;
+const int GATE_NAND = GATE_AND | GATE_NOT;
+const int GATE_NOR  = GATE_OR  | GATE_NOT;
+const int GATE_XNOR = GATE_XOR | GATE_NOT;
 
 #endif /* KICAD_ST_H */
