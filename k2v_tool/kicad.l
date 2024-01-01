@@ -79,7 +79,7 @@
 "\""([^"]*)"\"" {
                     /* String between quotes */
                     yytext[yyleng - 1] = 0;
-                    yylval.string_v = yytext + 1;
+                    yylval.string_v = strdup(yytext + 1);
                     //puts (yytext + 1);
                     return TOK_STRING;
                 }

@@ -44,7 +44,7 @@
 
 %code
 {
-    static char *fix_pin_name(char *s)
+    static void fix_pin_name(char *s)
     {
         // Fix negative logic names like : "~{Q}"
         if ((s) && (s[0] == '~') && (strlen(s) >= 4))
@@ -60,7 +60,6 @@
             s[i++] = 'n';
             s[i]   = 0;
         }
-        return s;
     }
 
     static p_sheets add_sheet(p_sheets p, char *number, char *name, p_sheet_st t)
@@ -265,14 +264,14 @@
     static p_pins add_pin(p_pins p, char *num, char *name, t_pin_type type)
     {
         t_pin_st obj;
-        char *str = fix_pin_name(name);
+        fix_pin_name(name);
         // If first element, create the list
         if (!p) p = new std::map<int,t_pin_st>;
         // Insert a new pin
         int n = (int)strtoul(num, nullptr, 10);
-        obj.m_pin  = n;                // num (int)
-        obj.m_name = std::string(str); // name (char *)
-        obj.m_type = type;             // type (t_pin_type)
+        obj.m_pin  = n;                 // num (int)
+        obj.m_name = std::string(name); // name (char *)
+        obj.m_type = type;              // type (t_pin_type)
         p->insert(std::make_pair(n, std::move(obj)));
         // Free memory from strdup() calls
         free(num);
@@ -307,6 +306,8 @@
         obj.m_vbus   = "";                // filled by associate_nets_pins()
         obj.m_vtype  = net_none;          // filled by associate_nets_pins()
         obj.m_nodes  = nl;                // node_list (<std::string,t_node_st> *)
+        // Debug
+        //std::cout << std::to_string(obj.m_idx) << ':' << obj.m_khier << '.' << obj.m_kname << ' ' << obj.m_vhier << '\n';
         p->insert(std::make_pair(n, std::move(obj)));
         // Free memory from strdup() calls
         free(code);
@@ -318,39 +319,42 @@
     static p_nodes add_node(p_nodes p, char *ref, char *pin, char *name, t_pin_type type)
     {
         t_node_st obj;
-        char *str = fix_pin_name(name);
+        // Pin number
+        int n = (int)strtoul(pin, nullptr, 10);
         // If first element, create the list
         if (!p) p = new std::map<std::string,t_node_st>;
         // Insert a new node
-        int n = (int)strtoul(pin, nullptr, 10);
-        obj.m_pin  = n;                             // pin (int)
-        obj.m_ref  = std::string(ref);              // ref (char *)
-        obj.m_name = (str) ? std::string(str) : ""; // name (char *)
-        obj.m_type = type;                          // type (t_pin_type)
+        fix_pin_name(name);
+        obj.m_pin  = n;                               // pin (int)
+        obj.m_ref  = std::string(ref);                // ref (char *)
+        obj.m_name = (name) ? std::string(name) : ""; // name (char *)
+        obj.m_type = type;                            // type (t_pin_type)
+        //std::cout << obj.m_ref << "." << std::string(pin) << '\n';
         p->insert(std::make_pair(obj.m_ref + "." + std::string(pin), std::move(obj)));
         // Free memory from strdup() calls
         free(ref);
         free(pin);
-        free(name);
+        if (name) free(name);
         
         return p;
     }
 
-    static t_pin_type conv_type(std::string type)
+    static t_pin_type conv_type(char *type)
     {
+        std::string s = std::string(type);
         //std::cout << "type : " << type << '\n';
-        if (type == "input")          return pin_input;
-        if (type == "output")         return pin_output;
-        if (type == "bidirectional")  return pin_bidirectional;
-        if (type == "tri_state")      return pin_tri_state;
-        if (type == "passive")        return pin_passive;
-        if (type == "free")           return pin_free;
-        if (type == "unspecified")    return pin_unspecified;
-        if (type == "power_in")       return pin_power_in;
-        if (type == "power_out")      return pin_power_out;
-        if (type == "open_collector") return pin_open_collector;
-        if (type == "open_emitter")   return pin_open_emitter;
-        if (type == "no_connect")     return pin_no_connect;
+        if (s == "input")          return pin_input;
+        if (s == "output")         return pin_output;
+        if (s == "bidirectional")  return pin_bidirectional;
+        if (s == "tri_state")      return pin_tri_state;
+        if (s == "passive")        return pin_passive;
+        if (s == "free")           return pin_free;
+        if (s == "unspecified")    return pin_unspecified;
+        if (s == "power_in")       return pin_power_in;
+        if (s == "power_out")      return pin_power_out;
+        if (s == "open_collector") return pin_open_collector;
+        if (s == "open_emitter")   return pin_open_emitter;
+        if (s == "no_connect")     return pin_no_connect;
         return pin_unspecified;
     }
 }
@@ -466,33 +470,33 @@
 
 %%
 
-code        : '(' KW_CODE        TOK_STRING ')' { $$ = strdup($3); }
-company     : '(' KW_COMPANY     TOK_STRING ')' { $$ = strdup($3); }
-date        : '(' KW_DATE        TOK_STRING ')' { $$ = strdup($3); }
-datasheet   : '(' KW_DATASHEET   TOK_STRING ')' { $$ = nullptr;    }
-description : '(' KW_DESCRIPTION TOK_STRING ')' { $$ = strdup($3); }
-docs        : '(' KW_DOCS        TOK_STRING ')' { $$ = nullptr;    }
-lib         : '(' KW_LIB         TOK_STRING ')' { $$ = strdup($3); }
-logical     : '(' KW_LOGICAL     TOK_STRING ')' { $$ = nullptr;    }
-name        : '(' KW_NAME        TOK_STRING ')' { $$ = strdup($3); }
-names       : '(' KW_NAMES       TOK_STRING ')' { $$ = strdup($3); }
-num         : '(' KW_NUM         TOK_STRING ')' { $$ = strdup($3); }
-number      : '(' KW_NUMBER      TOK_STRING ')' { $$ = strdup($3); }
-part        : '(' KW_PART        TOK_STRING ')' { $$ = strdup($3); }
-pin         : '(' KW_PIN         TOK_STRING ')' { $$ = strdup($3); }
-pinfunction : '(' KW_PINFUNCTION TOK_STRING ')' { $$ = strdup($3); }
-ref         : '(' KW_REF         TOK_STRING ')' { $$ = strdup($3); }
-rev         : '(' KW_REV         TOK_STRING ')' { $$ = strdup($3); }
-source      : '(' KW_SOURCE      TOK_STRING ')' { $$ = strdup($3); }
-title       : '(' KW_TITLE       TOK_STRING ')' { $$ = strdup($3); }
-tool        : '(' KW_TOOL        TOK_STRING ')' { $$ = strdup($3); }
-tstamps     : '(' KW_TSTAMPS     TOK_STRING ')' { $$ = nullptr;    }
-uri         : '(' KW_URI         TOK_STRING ')' { $$ = nullptr;    }
-value       : '(' KW_VALUE       TOK_STRING ')' { $$ = strdup($3); }
-version     : '(' KW_VERSION     TOK_STRING ')' { $$ = strdup($3); }
+code        : '(' KW_CODE        TOK_STRING ')' { $$ = $3; }
+company     : '(' KW_COMPANY     TOK_STRING ')' { $$ = $3; }
+date        : '(' KW_DATE        TOK_STRING ')' { $$ = $3; }
+datasheet   : '(' KW_DATASHEET   TOK_STRING ')' { $$ = nullptr; free($3); }
+description : '(' KW_DESCRIPTION TOK_STRING ')' { $$ = $3; }
+docs        : '(' KW_DOCS        TOK_STRING ')' { $$ = nullptr; free($3); }
+lib         : '(' KW_LIB         TOK_STRING ')' { $$ = $3; }
+logical     : '(' KW_LOGICAL     TOK_STRING ')' { $$ = nullptr; free($3); }
+name        : '(' KW_NAME        TOK_STRING ')' { $$ = $3; }
+names       : '(' KW_NAMES       TOK_STRING ')' { $$ = $3; }
+num         : '(' KW_NUM         TOK_STRING ')' { $$ = $3; }
+number      : '(' KW_NUMBER      TOK_STRING ')' { $$ = $3; }
+part        : '(' KW_PART        TOK_STRING ')' { $$ = $3; }
+pin         : '(' KW_PIN         TOK_STRING ')' { $$ = $3; }
+pinfunction : '(' KW_PINFUNCTION TOK_STRING ')' { $$ = $3; }
+ref         : '(' KW_REF         TOK_STRING ')' { $$ = $3; }
+rev         : '(' KW_REV         TOK_STRING ')' { $$ = $3; }
+source      : '(' KW_SOURCE      TOK_STRING ')' { $$ = $3; }
+title       : '(' KW_TITLE       TOK_STRING ')' { $$ = $3; }
+tool        : '(' KW_TOOL        TOK_STRING ')' { $$ = $3; }
+tstamps     : '(' KW_TSTAMPS     TOK_STRING ')' { $$ = nullptr; free($3); }
+uri         : '(' KW_URI         TOK_STRING ')' { $$ = nullptr; free($3); }
+value       : '(' KW_VALUE       TOK_STRING ')' { $$ = $3; }
+version     : '(' KW_VERSION     TOK_STRING ')' { $$ = $3; }
 
-pin_type    : '(' KW_TYPE        TOK_STRING ')' { $$ = conv_type($3); }
-pintype     : '(' KW_PINTYPE     TOK_STRING ')' { $$ = conv_type($3); }
+pin_type    : '(' KW_TYPE        TOK_STRING ')' { $$ = conv_type($3); free($3); }
+pintype     : '(' KW_PINTYPE     TOK_STRING ')' { $$ = conv_type($3); free($3); }
 
 netlist_file : '(' KW_EXPORT version[ve] design components[co] libparts[pa] libraries nets[ne] ')'
 {
@@ -536,8 +540,6 @@ title_block : '(' KW_TITLE_BLOCK title[ti] company[co] rev[re] date[da] source[s
     p->m_company  = std::string($co);
     p->m_revision = std::string($re);
     p->m_date     = std::string($da);
-    p->m_ports    = 0;
-    p->m_wires    = 0;
     p->m_comments = $cl;
     //p->m_buses    = get_buses(nullptr, $cl);
     $$ = p;
@@ -733,7 +735,7 @@ static void associate_parts_comps(void)
 }
 
 // Associate nets to pins
-static void associate_nets_pins(int sh_num)
+static void associate_nets_pins(void)
 {
     int n_cnt = 0; // Total node count
     int w_cnt = 0; // Total wire count
@@ -779,6 +781,7 @@ static void associate_nets_pins(int sh_num)
             }
             // Debug
             //std::cout << '<' << net->m_idx << '>' << net->m_kname << " : " << comp->m_ref << '.' << node->m_pin << '\n';
+            //std::cout.flush();
         }
         // Generate Verilog net names
         if (net->m_kname == "VCC")
@@ -874,23 +877,17 @@ static void associate_nets_pins(int sh_num)
         // Count the number of nodes
         n_cnt += net->m_nodes->size();
         // Debug
-        //std::cout << net->m_vname << " (" << net->m_oc << ',' << net->m_in << ',' << net->m_out << ',' << net->m_bdir << ")\n";
-        //std::cout << net->m_vname << " : " << s_net_type[net->m_vtype] << "\n";
+        //std::cout << net->m_vname << " : " << s_net_type[net->m_vtype] << " (" << net->m_oc << ',' << net->m_in << ',' << net->m_out << ',' << net->m_bdir << ")\n";
     }
     std::cout << "Found " << g_nets->size() << " nets with " << n_cnt << " nodes";
     std::cout << " (" << w_cnt << " wires, " << p_cnt << " ports, " << o_cnt << " opens)\n";
-
-    auto s = g_sheets->find(sh_num);
-    p_sheet_st sheet = &s->second;
-    sheet->m_ports = p_cnt;
-    sheet->m_wires = w_cnt;
 }
 
-static void emit_ports(int sh_num, FILE *fh)
+static void emit_ports(FILE *fh)
 {
     char ch = ' ';
     std::cout << "Create ports...\n";
-    auto s = g_sheets->find(sh_num);
+    auto s = g_sheets->find(1);
     p_sheet_st sheet = &s->second;
     fprintf(fh, "module %s\n(\n", sheet->m_title.c_str());
     for (auto n = g_nets->begin(); n != g_nets->end(); n++)
@@ -918,7 +915,7 @@ static void emit_ports(int sh_num, FILE *fh)
     fprintf(fh, ");\n");
 }
 
-static void emit_wires(int sh_num, FILE *fh)
+static void emit_wires(FILE *fh)
 {
     std::cout << "Create wires...\n";
     fputs("\n// Wires declaration :\n//====================\n", fh);
@@ -939,7 +936,7 @@ static void emit_wires(int sh_num, FILE *fh)
     }
 }
 
-static void emit_gates(int sh_num, FILE *fh)
+static void emit_gates(FILE *fh)
 {
     // Scan the component instances
     std::cout << "Create gates...\n";
@@ -1028,7 +1025,7 @@ static void emit_gates(int sh_num, FILE *fh)
     }
 }
 
-static void emit_prims(int sh_num, FILE *fh)
+static void emit_prims(FILE *fh)
 {
     // Scan the component instances
     std::cout << "Create primitives...\n";
@@ -1058,7 +1055,7 @@ static void emit_prims(int sh_num, FILE *fh)
     }
 }
 
-static void emit_plas(int sh_num, FILE *fh)
+static void emit_plas(FILE *fh)
 {
     std::cout << "Create PLAs...\n";
     fputs("\n// PLAs equations :\n//=================\n", fh);
@@ -1096,7 +1093,7 @@ static void emit_plas(int sh_num, FILE *fh)
     }
 }
 
-static void check_nets(int sh_num, FILE *fh)
+static void check_nets(FILE *fh)
 {
     std::cout << "Check undriven nets...\n";
     for (auto n = g_nets->begin(); n != g_nets->end(); n++)
@@ -1139,15 +1136,15 @@ int main(int argc, char **argv)
         status = yyparse();
         
         associate_parts_comps();
-        associate_nets_pins(1);
+        associate_nets_pins();
 
-        emit_ports(1, dest);
-        emit_wires(1, dest);
-        emit_plas (1, dest);
-        emit_gates(1, dest);
-        emit_prims(1, dest);
-
-        check_nets(1, dest);
+        emit_ports(dest);
+        emit_wires(dest);
+        emit_plas (dest);
+        emit_gates(dest);
+        emit_prims(dest);
+        
+        check_nets(dest);
         
         fputs("endmodule\n", dest);
 
