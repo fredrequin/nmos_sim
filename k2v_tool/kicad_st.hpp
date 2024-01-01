@@ -26,8 +26,6 @@ typedef struct
     std::string  m_company;
     std::string  m_revision;
     std::string  m_date;
-    int          m_ports;
-    int          m_wires;
     p_comments   m_comments;
     //p_buses      m_buses;
 } t_sheet_st, *p_sheet_st;
