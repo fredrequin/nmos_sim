@@ -25,18 +25,19 @@ ClockGen *clk;
 int main(int argc, char **argv, char **env)
 {
     // Simulation duration
-    clock_t beg, end;
-    double secs;
+    clock_t     beg, end;
+    double      secs;
     // Trace index
-    int trc_idx = 0;
-    int min_idx = 0;
-    vluint8_t dbg_vs = 1;
+    int         trc_idx = 0;
+    int         min_idx = 0;
+    vluint8_t   dbg_vs = 1;
     // File name generation
-    char file_name[256];
+    char        file_name[256];
     // Simulation time
-    vluint64_t tb_time;
-    vluint64_t max_time;
+    vluint64_t  tb_time;
+    vluint64_t  max_time;
     // Testbench configuration
+    vluint8_t   pal = 0;
     const char *arg;
     
     beg = clock();
@@ -75,6 +76,15 @@ int main(int argc, char **argv, char **env)
         min_idx = 0;
     }
     
+    // PAL or NTSC chip
+    arg = Verilated::commandArgsPlusMatch("chip=");
+    if ((arg) && (arg[0]))
+    {
+        arg += 6;
+        if (!strcmp(arg, "ntsc")) pal = 0;
+        if (!strcmp(arg, "pal" )) pal = 1;
+    }
+
     // Initialize top verilog instance
     VM_PREFIX* top = new VM_PREFIX;
     top->eval ();
@@ -83,7 +93,7 @@ int main(int argc, char **argv, char **env)
     clk = new ClockGen(1);
     tb_time = (vluint64_t)0;
     // 5 x 28 MHz clock
-    clk->NewClock(0, PERIOD_PAL_142MHz_ps);
+    clk->NewClock(0, (pal) ? PERIOD_PAL_142MHz_ps : PERIOD_NTSC_143MHz_ps);
     clk->ConnectClock(0, &top->main_clk);
     clk->StartClock(0, tb_time);
     
@@ -101,6 +111,7 @@ int main(int argc, char **argv, char **env)
     }
 #endif /* VM_TRACE */
   
+    top->ntscn_pal = pal;
     // Reset ON during 48 cycles
     top->main_rst = 1;
     for (int i = 0; i < 96; i ++)

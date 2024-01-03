@@ -979,9 +979,6 @@
     (path "/2741f2f7-0689-47b7-9f91-a147d422d2dd/d6461ef6-df31-4693-93b5-908ac66763e0"
       (reference "NOT_9") (unit 1) (value "NOT") (footprint "")
     )
-    (path "/2741f2f7-0689-47b7-9f91-a147d422d2dd/5d6c2c94-02c5-454a-a1ab-b39fa3e1f13e"
-      (reference "NOT_10") (unit 1) (value "NOT") (footprint "")
-    )
     (path "/d34432c0-ab02-4dab-851f-3fb8163b7223/006fca55-a1fb-475d-a905-2b70c7c173c9"
       (reference "NOT_11") (unit 1) (value "NOT") (footprint "")
     )
