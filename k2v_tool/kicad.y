@@ -930,7 +930,7 @@ static void emit_wires(FILE *fh)
             }
             else
             {
-                fprintf(fh, "wire %s;\n", net->m_vname.c_str());
+                fprintf(fh, "wire        %s;\n", net->m_vname.c_str());
             }
         }
     }
@@ -962,7 +962,7 @@ static void emit_gates(FILE *fh)
                         // Output
                         case 1:
                         {
-                            fprintf(fh, "assign %-16s =  (", net->m_vname.c_str());
+                            fprintf(fh, "assign %-20s =  (", net->m_vname.c_str());
                             net->m_driven = true;
                             break;
                         }
@@ -1007,7 +1007,7 @@ static void emit_gates(FILE *fh)
                     // Output
                     if (io == 1)
                     {
-                        fprintf(fh, "assign %-16s = %c(", net->m_vname.c_str(), op2);
+                        fprintf(fh, "assign %-20s = %c(", net->m_vname.c_str(), op2);
                         net->m_driven = true;
                     }
                     // Last input
@@ -1065,7 +1065,7 @@ static void emit_plas(FILE *fh)
         if (net->m_oc > 0)
         {
             char op = '(';
-            fprintf(fh, "assign %-16s =", net->m_vname.c_str());
+            fprintf(fh, "assign %-20s =", net->m_vname.c_str());
             // Scan the nodes
             for (auto m = net->m_nodes->begin(); m != net->m_nodes->end(); m++)
             {
