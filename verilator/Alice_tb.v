@@ -1,7 +1,8 @@
 module Alice_tb
 (
     input wire main_rst,
-    input wire main_clk
+    input wire main_clk,
+    input wire ntscn_pal
 );
 
     wire C28M;
@@ -58,21 +59,21 @@ module Alice_tb
 
     Alice DUT
     (
-        .RESET (main_rst),
-        .PHI1  (w_C3_rise),
-        .PHI2  (w_C1_rise),
-        .CCKR  (w_C1_rise),
-        .CCKF  (w_C1_fall),
+        .RESET     (main_rst),
+        .PHI1      (w_C3_rise),
+        .PHI2      (w_C1_rise),
+        .CCKR      (w_C1_rise),
+        .CCKF      (w_C1_fall),
 
-        .DB    (w_data_bus),
-        .HCTR  (w_hor_ctr),
-        .VCTR  (w_ver_ctr),
-        .LPEN  (1'b1),
-        .NTSC  (1'b1),
+        .DB        (w_data_bus),
+        .HCTR      (w_hor_ctr),
+        .VCTR      (w_ver_ctr),
+        .LPEN      (1'b1),
+        .NTSCN_PAL (ntscn_pal),
 
-        .HSYNC (/* open */),
-        .VSYNC (/* open */),
-        .CSYNC (/* open */)
+        .HSYNC     (/* open */),
+        .VSYNC     (/* open */),
+        .CSYNC     (/* open */)
     );
 
 endmodule
