@@ -1,0 +1,3 @@
+[submodule "verilator_helpers"]
+	path = verilator_helpers
+	url = https://github.com/fredrequin/verilator_helpers
