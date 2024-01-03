@@ -1,3 +1,8 @@
+*.exe
 *.log
 *.vcd
+*.zip
+lex.yy.*
+*.tab.*
 obj_dir
+*-backups
