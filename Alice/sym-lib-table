@@ -1,3 +1,3 @@
 (sym_lib_table
-  (lib (name "NMOS")(type "KiCad")(uri "../nmos_lib/NMOS.kicad_sym")(options "")(descr ""))
+  (lib (name "NMOS")(type "KiCad")(uri "${KIPRJMOD}/../nmos_lib/NMOS.kicad_sym")(options "")(descr ""))
 )
