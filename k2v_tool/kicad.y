@@ -721,6 +721,7 @@ static void associate_parts_comps(void)
         // Identify logic gates
         std::string s = p->second.m_part;
              if (s == "NOT"  ) comp->m_flags = GATE_NOT;
+        else if (s == "BUF"  ) comp->m_flags = GATE_BUF;
         else if (s == "MUX"  ) comp->m_flags = GATE_MUX;
         else if (s.compare(0, 3, "AND" ) == 0) comp->m_flags = GATE_AND;
         else if (s.compare(0, 4, "NAND") == 0) comp->m_flags = GATE_NAND;
@@ -995,8 +996,9 @@ static void emit_gates(FILE *fh)
                          : (comp->m_flags & GATE_XOR) ? '^'
                          : ' ';
                 char op2 = (comp->m_flags & GATE_NOT) ? '~' : ' ';
-                // Number of gate I/Os (3 to 10)
-                int  num_io = (comp->m_flags == GATE_NOT) ? 2 : part->m_part.back() - '0' + 1;
+                // Number of gate I/Os (2 to 10)
+                int  num_io = ((comp->m_flags == GATE_NOT) ||
+                               (comp->m_flags == GATE_BUF)) ? 2 : part->m_part.back() - '0' + 1;
                 // Scan the gate I/Os
                 //std::cout << part->m_part << " : " << num_io << op1 << op2 << '\n';
                 for (int io = 1; io <= num_io; io++)
