@@ -1057,6 +1057,9 @@
     (path "/2741f2f7-0689-47b7-9f91-a147d422d2dd/30352ecf-9110-451f-bd10-b63f2d37c53a"
       (reference "OR_20") (unit 1) (value "OR3") (footprint "")
     )
+    (path "/d34432c0-ab02-4dab-851f-3fb8163b7223/9fd06ed3-64f3-41aa-a308-68f67100c36f"
+      (reference "OR_21") (unit 1) (value "OR2") (footprint "")
+    )
     (path "/2741f2f7-0689-47b7-9f91-a147d422d2dd/4e0e8806-c1ed-4bfd-a3fc-e8d5ff3e8027"
       (reference "PVE_SR1") (unit 1) (value "SR") (footprint "")
     )
