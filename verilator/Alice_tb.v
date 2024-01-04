@@ -68,6 +68,7 @@ module Alice_tb
         .DB        (w_data_bus),
         .HCTR      (w_hor_ctr),
         .VCTR      (w_ver_ctr),
+        .DMAL      (1'b1),
         .LPEN      (1'b1),
         .NTSCN_PAL (ntscn_pal),
 

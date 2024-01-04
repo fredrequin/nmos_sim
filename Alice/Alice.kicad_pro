@@ -422,6 +422,10 @@
     [
       "2741f2f7-0689-47b7-9f91-a147d422d2dd",
       "ver_count"
+    ],
+    [
+      "e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47",
+      "fixed_dma"
     ]
   ],
   "text_variables": {}
