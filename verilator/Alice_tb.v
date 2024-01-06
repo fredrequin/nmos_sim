@@ -64,10 +64,13 @@ module Alice_tb
         .PHI2      (w_C1_rise),
         .CCKR      (w_C1_rise),
         .CCKF      (w_C1_fall),
+        .CCKQF     (w_C3_fall),
 
         .DB        (w_data_bus),
         .HCTR      (w_hor_ctr),
         .VCTR      (w_ver_ctr),
+        .BLS       (1'b1),
+        .DBR       (/* open */),
         .DMAL      (1'b1),
         .LPEN      (1'b1),
         .NTSCN_PAL (ntscn_pal),
