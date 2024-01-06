@@ -59,25 +59,26 @@ module Alice_tb
 
     Alice DUT
     (
-        .RESET     (main_rst),
-        .PHI1      (w_C3_rise),
-        .PHI2      (w_C1_rise),
-        .CCKR      (w_C1_rise),
-        .CCKF      (w_C1_fall),
-        .CCKQF     (w_C3_fall),
+        .RESET         (main_rst),
+        .PHI1          (w_C3_rise),
+        .PHI2          (w_C1_rise),
+        .CCKR          (w_C1_rise),
+        .CCKF          (w_C1_fall),
+        .CCKQF         (w_C3_fall),
 
-        .DB        (w_data_bus),
-        .HCTR      (w_hor_ctr),
-        .VCTR      (w_ver_ctr),
-        .BLS       (1'b1),
-        .DBR       (/* open */),
-        .DMAL      (1'b1),
-        .LPEN      (1'b1),
-        .NTSCN_PAL (ntscn_pal),
+        .DB            (w_data_bus),
+        .HCTR          (w_hor_ctr),
+        .VCTR          (w_ver_ctr),
+        .PAD_NBLS      (1'b1),
+        .PAD_NDBR      (/* open */),
+        .PAD_DMAL      (1'b1),
+        .PAD_NLP       (1'b1),
+        .PAD_NNTSC_PAL (ntscn_pal),
+        .PAD_RGA       (/* open */),
 
-        .HSYNC     (/* open */),
-        .VSYNC     (/* open */),
-        .CSYNC     (/* open */)
+        .PAD_HSYNC     (/* open */),
+        .PAD_VSYNC     (/* open */),
+        .PAD_CSYNC     (/* open */)
     );
 
 endmodule
