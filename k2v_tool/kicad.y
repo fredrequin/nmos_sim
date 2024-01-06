@@ -192,7 +192,7 @@
         {
             std::string s = it->first;
             int l = (int)s.length();
-            if (s.compare(0, -1, name, l) == 0)
+            if ((s.compare(0, -1, name, l) == 0) && isdigit(name[l]))
             {
                 int n = (int)strtoul(name + l, nullptr, 10);
                 // Debug
