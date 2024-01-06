@@ -517,7 +517,7 @@
       (effects (font (size 1.27 1.27)) (justify right))
       (uuid 397d03e6-049e-45f0-943f-8d841e181ff1)
     )
-    (pin "DRB[8..1]" output (at 434.34 264.16 0)
+    (pin "DRB[8..1]" output (at 434.34 259.08 0)
       (effects (font (size 1.27 1.27)) (justify right))
       (uuid 1738b2df-46ea-436b-8aa2-58774260a686)
     )
@@ -541,9 +541,49 @@
       (effects (font (size 1.27 1.27)) (justify right))
       (uuid 4f3da93c-cb61-4f52-954d-0ed685acf0b3)
     )
-    (pin "DDRB[8..1]" output (at 434.34 261.62 0)
+    (pin "UBPBS" input (at 378.46 254 180)
+      (effects (font (size 1.27 1.27)) (justify left))
+      (uuid 5a12fedf-0bae-4fde-85cf-ecf075d3e47b)
+    )
+    (pin "EUSP" input (at 378.46 256.54 180)
+      (effects (font (size 1.27 1.27)) (justify left))
+      (uuid 9cd80e27-b0f9-40c1-a384-a08c06ef76b3)
+    )
+    (pin "EUVP" input (at 378.46 259.08 180)
+      (effects (font (size 1.27 1.27)) (justify left))
+      (uuid b1a60961-81ab-4fa9-9933-720ff0fc0d3e)
+    )
+    (pin "EUCP" input (at 378.46 261.62 180)
+      (effects (font (size 1.27 1.27)) (justify left))
+      (uuid a353c304-89c5-4492-87ba-9ac3318ace6a)
+    )
+    (pin "BLTPRI" input (at 378.46 264.16 180)
+      (effects (font (size 1.27 1.27)) (justify left))
+      (uuid 7b4bbdbf-43cf-4631-8404-00f814ba6789)
+    )
+    (pin "DDBR" output (at 434.34 264.16 0)
       (effects (font (size 1.27 1.27)) (justify right))
-      (uuid 834d1874-4a43-4264-8b2f-9bb53bb57c66)
+      (uuid 8a378645-a7c1-4569-bdfc-089b665f8c86)
+    )
+    (pin "RGB[8..1]" output (at 434.34 256.54 0)
+      (effects (font (size 1.27 1.27)) (justify right))
+      (uuid 02ee7976-7222-456e-9661-c4d7d67e062f)
+    )
+    (pin "COPRS" input (at 378.46 251.46 180)
+      (effects (font (size 1.27 1.27)) (justify left))
+      (uuid 49d2888d-92c4-4cd2-8c16-d5c3475cc73f)
+    )
+    (pin "RFP" output (at 434.34 266.7 0)
+      (effects (font (size 1.27 1.27)) (justify right))
+      (uuid 60e5e748-ef85-4c50-af0f-cc939bb2b701)
+    )
+    (pin "UPA[20..1]" input (at 434.34 254 0)
+      (effects (font (size 1.27 1.27)) (justify right))
+      (uuid 0539a857-a61b-4106-8555-72a27ed85c72)
+    )
+    (pin "CIR[8..1]" input (at 434.34 251.46 0)
+      (effects (font (size 1.27 1.27)) (justify right))
+      (uuid 75f91a14-a451-483b-8c80-7e4a03afbca5)
     )
   )
 
@@ -753,7 +793,7 @@
     (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/2240c634-98fd-43c8-aafa-9318b37ecd6c"
       (reference "AND_42") (unit 1) (value "AND2") (footprint "")
     )
-    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/fed98590-a6e1-4774-9ac5-6dd42197f19e"
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/df9e479e-e9b8-46c3-b046-98d04ba7c1e4"
       (reference "AND_43") (unit 1) (value "AND3") (footprint "")
     )
     (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/5ffc5df3-6995-4d07-a3c9-008a21e62bb5"
@@ -764,6 +804,12 @@
     )
     (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/97093bfe-4c55-4e29-b6c1-802d235158e0"
       (reference "AND_46") (unit 1) (value "AND2") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/ce0204bb-4d02-4158-872f-13406cdbd744"
+      (reference "AND_47") (unit 1) (value "AND3") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/e603f5fd-8c2e-4e21-a337-ef185b04ba33"
+      (reference "AND_48") (unit 1) (value "AND3") (footprint "")
     )
     (path "/d34432c0-ab02-4dab-851f-3fb8163b7223/c6da32e9-082f-42b3-8220-701866caef85"
       (reference "BEAMCON0_LB0") (unit 1) (value "LB2") (footprint "")
@@ -831,8 +877,11 @@
     (path "/d34432c0-ab02-4dab-851f-3fb8163b7223/b3787fe0-fe46-462b-9995-f70be88512fe"
       (reference "CSY_SR1") (unit 1) (value "SR") (footprint "")
     )
-    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/2794c9aa-1127-4db2-9b3e-35f0e417d54a"
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/d9ae218f-b604-4d6d-be0a-a86e9947a54a"
       (reference "DBR_FF1") (unit 1) (value "DFF") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/6be26fde-816a-4b04-8161-206faf15623e"
+      (reference "DBR_Q1") (unit 1) (value "PASS") (footprint "")
     )
     (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/13440c5c-2ff3-4b12-aa4a-e2cdfc74287b"
       (reference "DMAL_FF1") (unit 1) (value "DFF") (footprint "")
@@ -1301,6 +1350,15 @@
     )
     (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/4242ceb0-fe6f-4337-99f5-b82597deafe6"
       (reference "NOT_18") (unit 1) (value "NOT") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/19841aaa-3aa3-4f85-b643-d3da99db2e3a"
+      (reference "NOT_19") (unit 1) (value "NOT") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/51f9cf42-53ef-4f0f-9eca-a8808182d099"
+      (reference "NOT_20") (unit 1) (value "NOT") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/1e12fc1d-20f7-4e62-a565-f6e7f4631dd0"
+      (reference "NOT_21") (unit 1) (value "NOT") (footprint "")
     )
     (path "/2741f2f7-0689-47b7-9f91-a147d422d2dd/466ddeb0-f60d-4004-b8f0-c3c6cf3ba62f"
       (reference "OLDVB_SR1") (unit 1) (value "SR") (footprint "")
@@ -2501,6 +2559,54 @@
     )
     (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/306fbb41-9392-4407-a82a-74f3d6ca7d72"
       (reference "RFP_FF1") (unit 1) (value "DFF") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/39427acb-960f-4550-ba6b-61d3e5cd6184"
+      (reference "RGA_INB1") (unit 1) (value "FAINB") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/0c57575e-c76c-4ce1-be77-d1e0a329fa18"
+      (reference "RGA_INB2") (unit 1) (value "FAINB") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/7d7ece72-2c08-44f0-83a9-d2df65bd6c0d"
+      (reference "RGA_INB3") (unit 1) (value "FAINB") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/22dedd4a-cbc8-4e21-a568-800399dd7682"
+      (reference "RGA_INB4") (unit 1) (value "FAINB") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/aa63b0bd-d670-4bd9-85cd-3a2777cb2a42"
+      (reference "RGA_INB5") (unit 1) (value "FAINB") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/f97af25d-99ad-41b5-96e5-c2f1b92dc779"
+      (reference "RGA_INB6") (unit 1) (value "FAINB") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/a4f4e71f-c853-4b7e-bee1-e2373b6b32a9"
+      (reference "RGA_INB7") (unit 1) (value "FAINB") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/54235019-2e42-4596-8877-80c587a06f86"
+      (reference "RGA_INB8") (unit 1) (value "FAINB") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/02fb4a95-a40d-4ffb-8f8e-c29a8ce1e663"
+      (reference "RGA_MUX1") (unit 1) (value "FAMUX") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/c3edeb58-90b9-41d0-8072-f6ae61b29dbc"
+      (reference "RGA_MUX2") (unit 1) (value "FAMUX") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/f6dd32b3-83d8-49a3-958a-779458118d6b"
+      (reference "RGA_MUX3") (unit 1) (value "FAMUX") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/167be6af-0848-48b3-ad75-d28829a4017f"
+      (reference "RGA_MUX4") (unit 1) (value "FAMUX") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/fc177e1a-b8ac-4aaa-ad9d-002772094d93"
+      (reference "RGA_MUX5") (unit 1) (value "FAMUX") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/91f5d199-e220-40ec-805d-52774f308f77"
+      (reference "RGA_MUX6") (unit 1) (value "FAMUX") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/456ed35e-ace7-41d5-a2ae-25c68a4c2991"
+      (reference "RGA_MUX7") (unit 1) (value "FAMUX") (footprint "")
+    )
+    (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/eff76857-d39a-48c8-9503-2395161e61de"
+      (reference "RGA_MUX8") (unit 1) (value "FAMUX") (footprint "")
     )
     (path "/e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47/d48cfc93-78b1-4b3a-9e54-6f76ae4f863d"
       (reference "URP_FF1") (unit 1) (value "DFF") (footprint "")
