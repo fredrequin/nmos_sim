@@ -426,6 +426,10 @@
     [
       "e894cc74-6f5d-406a-b8a9-c5dbe3f8ad47",
       "fixed_dma"
+    ],
+    [
+      "54cb73f9-8193-43ae-9226-1a4501badffa",
+      "rga_decode"
     ]
   ],
   "text_variables": {}
