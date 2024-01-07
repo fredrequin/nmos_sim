@@ -20,11 +20,11 @@ module NMOS_FAMUX
 
     always @(posedge _clk) begin
         
-        if (SA) _r_Q <= A;
-        if (SB) _r_Q <= B;
-        if (SC) _r_Q <= C;
+        if (SA) _r_Q <= A | FF;
+        if (SB) _r_Q <= B | FF;
+        if (SC) _r_Q <= C | FF;
     end
 
-    assign Q = (FF) ? 1'b1 : _r_Q;
+    assign Q = _r_Q;
 
 endmodule
