@@ -6,6 +6,7 @@
 // NMOS library :
 //===============
 tracing_off -file "../nmos_lib/hdl/NMOS_BIDIR.v"
+tracing_off -file "../nmos_lib/hdl/NMOS_CLOCKGEN.v"
 tracing_off -file "../nmos_lib/hdl/NMOS_CMPD.v"
 tracing_off -file "../nmos_lib/hdl/NMOS_CT.v"
 tracing_off -file "../nmos_lib/hdl/NMOS_DFF.v"
@@ -41,9 +42,10 @@ tracing_on  -file "Alice_tb.v"
 
 `verilog
 
-`define CLK_GEN Alice_tb.U_clk_gen
+`define CLK_GEN Alice_tb.X1
 
 `include "../nmos_lib/hdl/NMOS_BIDIR.v"
+`include "../nmos_lib/hdl/NMOS_CLOCKGEN.v"
 `include "../nmos_lib/hdl/NMOS_CMPD.v"
 `include "../nmos_lib/hdl/NMOS_CT.v"
 `include "../nmos_lib/hdl/NMOS_DFF.v"

@@ -14,42 +14,6 @@ module Alice_tb
     );
 
     //=========================================================================
-    // Clocks generation
-    //=========================================================================
-
-    wire  [2:0] C1, C2, C3, C4;
-    wire  [2:0] CCK, CCKQ, C7M, CDAC;
-    
-    Alice_clk_gen U_clk_gen
-    (
-        .main_clk (main_clk),
-        .ena_28m  (C28M),
-        // 3.546895 MHz / 3.579545 clocks
-        .C1       (C1),
-        .C2       (C2),
-        .C3       (C3),
-        .C4       (C4),
-        // 7.093790 MHz / 7.159090 MHz clocks
-        .C7M      (C7M),
-        .CDAC     (CDAC)
-    );
- 
-    assign CCK    = C1;
-    assign CCKQ   = C3;
-    
-    wire w_C1_rise = C1[1];
-    wire w_C1_fall = C1[2];
-
-    wire w_C2_rise = C2[1];
-    wire w_C2_fall = C2[2];
-
-    wire w_C3_rise = C3[1];
-    wire w_C3_fall = C3[2];
-
-    wire w_C4_rise = C4[1];
-    wire w_C4_fall = C4[2];
-
-    //=========================================================================
     // Translated Kicad schematic
     //=========================================================================
     
@@ -59,13 +23,12 @@ module Alice_tb
 
     Alice DUT
     (
-        .RESET         (main_rst),
-        .PHI1          (w_C3_rise),
-        .PHI2          (w_C1_rise),
-        .CAS           (~C1[0]),
-        .CCKR          (w_C1_rise),
-        .CCKF          (w_C1_fall),
-        .CCKQF         (w_C3_fall),
+        .PAD_NRST      (~main_rst),
+        .PAD_C28M      (C28M),
+        .PAD_C7M       (/* open */),
+        .PAD_CDAC      (/* open */),
+        .PAD_CCK       (/* open */),
+        .PAD_CCKQ      (/* open */),
 
         .DB            (w_data_bus),
         .HCTR          (w_hor_ctr),
