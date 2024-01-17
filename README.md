@@ -7,7 +7,7 @@ NMOS_SIM is an attempt to run gate-level simulation of old NMOS chips using KiCa
 Features
 --------
 
-- The main focus is Commodore/Amiga NMOS chips
+- The main focus is on Commodore/Amiga NMOS chips
 - Uses KiCad 6.0 as a schematics capture tool
 - Uses a special KiCad library that contains all the NMOS primitives
 - Uses a custom "k2v" tool (KiCad to Verilog) to convert the KiCad netlist into a Verilog file
@@ -23,11 +23,11 @@ You are reading it right now.
 
 #### k2v_tool/kicad.l
 
-KiCad 6.0 netlist conversion tool lex/flex configuration file
+KiCad 6.0 netlist conversion tool - lex/flex configuration file
 
 #### k2v_tool/kicad.y
 
-KiCad 6.0 netlist conversion tool yacc/bison configuration file
+KiCad 6.0 netlist conversion tool - yacc/bison configuration file
 
 #### k2v_tool/kicad_st.hpp
 
@@ -89,4 +89,4 @@ cd ../verilator
 make
 ```
 
-If you change the Alice/Agnus schematics, the KiCad netlist must re-generated (Files->Export->Netlist) and written to "Alice/Alice.net" file.
+If you change the Alice/Agnus schematics, the KiCad netlist must re-generated (Files->Export->Netlist) and written to the "Alice/Alice.net" file.
