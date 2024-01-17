@@ -33,7 +33,6 @@ tracing_off -file "../nmos_lib/hdl/NMOS_TR.v"
 // Alice chip :
 //=============
 tracing_on  -file "Alice.v"
-tracing_on  -file "Alice_clk_gen.v"
 
 // Test bench :
 //=============
@@ -71,7 +70,6 @@ tracing_on  -file "Alice_tb.v"
 
 /* verilator lint_off PINMISSING */
 `include "Alice.v"
-`include "Alice_clk_gen.v"
 /* verilator lint_on PINMISSING */
 
 `include "osc_28m.v"
