@@ -32,7 +32,9 @@ module Alice_tb
 
         .DB            (w_data_bus),
         .HCTR          (w_hor_ctr),
+        .NHCTR         (/* open */),
         .VCTR          (w_ver_ctr),
+        .PAD_PRW       (1'b1),
         .PAD_NBLS      (1'b1),
         .PAD_NAS       (1'b1),
         .PAD_NRGEN     (1'b1),
@@ -40,6 +42,7 @@ module Alice_tb
         .PAD_DMAL      (1'b1),
         .PAD_NLP       (1'b1),
         .PAD_NNTSC_PAL (ntscn_pal),
+        .PAD_RRW       (/* open */),
         .PAD_RGA       (/* open */),
 
         .PAD_HSYNC     (/* open */),

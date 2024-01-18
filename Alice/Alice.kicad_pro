@@ -430,6 +430,10 @@
     [
       "54cb73f9-8193-43ae-9226-1a4501badffa",
       "rga_decode"
+    ],
+    [
+      "b358eb29-6d9d-43a4-86bf-b8c787a94241",
+      "plane_dma"
     ]
   ],
   "text_variables": {}
