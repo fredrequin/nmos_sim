@@ -70,7 +70,7 @@ Alice.v: $(DESIGN)/Alice.net
 	$(K2V) $(DESIGN)/Alice.net Alice.v
 
 # Convert Verilog into C++
-$(OUT_CPP)/$(EXE_FILE).mk: tb_top.v Alice_tb.v Alice_clk_gen.v osc_28m.v Alice.v $(NMOS)/*.v $(CPP_FILES)
+$(OUT_CPP)/$(EXE_FILE).mk: tb_top.v Alice_tb.v osc_28m.v Alice.v $(NMOS)/*.v $(CPP_FILES)
 	verilator $< $(VERILATOR_OPT) $(COMPILE_OPT) $(TRACE_OPT) $(CLOCK_OPT) --top-module $(TOP_FILE) --exe $(CPP_FILES) verilated_dpi.cpp
 
 # Create an executable from the C++ files
