@@ -2,7 +2,7 @@
 NMOS_SIM - Simulation of old NMOS chip using KiCad and Verilator
 ================================================================
 
-NMOS_SIM is an attempt to run gate-level simulation of old NMOS chips using KiCad 6.0 and Verilator
+NMOS_SIM is an attempt to run gate-level simulation of old NMOS chips by using KiCad 6.0 and Verilator
 
 Features
 --------
@@ -47,7 +47,7 @@ The same NMOS primitives written in Verilog (for the gate-level simulation)
 
 #### Alice/
 
-Folder containing the KiCad schematics and netlist of Alice/Agnus chip (WIP), it based on this document: https://github.com/nonarkitten/amiga_replacement_project/blob/master/agnus/alice_schematics.pdf
+Folder containing the KiCad schematics and netlist of Alice/Agnus chip (WIP), it is based on this document: https://github.com/nonarkitten/amiga_replacement_project/blob/master/agnus/alice_schematics.pdf
 
 #### verilator/osc_28m.v
 
@@ -90,3 +90,24 @@ make
 ```
 
 If you change the Alice/Agnus schematics, the KiCad netlist must re-generated (Files->Export->Netlist) and written to the "Alice/Alice.net" file.
+
+Tips and tricks for KiCad
+-------------------------
+
+### Components references
+
+KiCad components references (U.., R.., Q..) are only kept in the Verilog file for complex/clocked primitives.\
+Let KiCad do the numbering for you for :
+- the gates (AND, OR, NAND, NOR, XOR, XNOR, NOT, BUF)
+- the PLA structures (NMOS pull-up and NMOS transistor)
+- the MUXes
+
+### Bus signals
+
+KiCad generated netlist does not keep the buses from the schematics.\
+Having individual wires in the Verilog file has an impact on simulation speed and generates VCD trace that are not user friendly.\
+To overcome this limitation, some bus directives can be hidden in the sheet's title block, in the comment section.\
+For example, if you want to declare DB, HCTR and VCTR as buses, you can write in comment line #5:
+```
+bus: DB[15:0] VCTR[10:0] NVCTR[10:0]
+```
