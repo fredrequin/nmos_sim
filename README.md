@@ -111,3 +111,16 @@ For example, if you want to declare DB, HCTR and VCTR as buses, you can write in
 ```
 bus: DB[15:0] VCTR[10:0] NVCTR[10:0]
 ```
+
+### Sheet's title block fields
+
+Fields "Date", "Revision", "Title" and "Company" should not be left empty because the KiCad netlist generator does not write an empty string by default.
+
+### PLA structures
+
+The tool conveniently supports PLA structures by using NMOS "PULLUP" and NMOS "NOT_OC" symbols.
+They get translated to this Verilog construct (note the inverted logic):
+```
+assign <PLA out signal> = (<PLA in 1> | <PLA in 2> |... ) ? 1'b0 : 1'b1;
+```
+The output wires of the PLA should be named, otherwise the assign statement will be invalid.
