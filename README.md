@@ -12,7 +12,7 @@ Features
 - Uses a special KiCad library that contains all the NMOS primitives
 - Uses a custom "k2v" tool (KiCad to Verilog) to convert the KiCad netlist into a Verilog file
 - Uses Verilator to run the gate-level simulation
-- Uses the https://github.com/fredrequin/verilator_helpers repository
+- Uses the [verilator_helpers](https://github.com/fredrequin/verilator_helpers) repository
 
 Files in this Repository
 ------------------------
@@ -47,7 +47,7 @@ The same NMOS primitives written in Verilog (for the gate-level simulation)
 
 #### Alice/
 
-Folder containing the KiCad schematics and netlist of Alice/Agnus chip (WIP), it is based on this document: https://github.com/nonarkitten/amiga_replacement_project/blob/master/agnus/alice_schematics.pdf
+Folder containing the KiCad schematics and netlist of Alice/Agnus chip (WIP), it is based on this document: [alice_schematics.pdf](https://github.com/nonarkitten/amiga_replacement_project/blob/master/agnus/alice_schematics.pdf)
 
 #### verilator/osc_28m.v
 
@@ -97,16 +97,16 @@ Tips and tricks for KiCad
 ### Components references
 
 KiCad components references (U.., R.., Q..) are only kept in the Verilog file for complex/clocked primitives.\
-Let KiCad do the numbering for you for :
+For simple primitive, let KiCad do the numbering for you. This does apply for :
 - the gates (AND, OR, NAND, NOR, XOR, XNOR, NOT, BUF)
 - the PLA structures (NMOS pull-up and NMOS transistor)
 - the MUXes
 
 ### Bus signals
 
-KiCad generated netlist does not keep the buses from the schematics.\
-Having individual wires in the Verilog file has an impact on simulation speed and generates VCD trace that are not user friendly.\
-To overcome this limitation, some bus directives can be hidden in the sheet's title block, in the comment section.\
+KiCad generated netlist does not keep the buses defined in the schematics.\
+Having individual wires in the Verilog file has an impact on simulation speed and generates VCD traces that are not user friendly.\
+To overcome this limitation, some bus directives can be hidden in the sheet's title block : in the comment section.\
 For example, if you want to declare DB, HCTR and VCTR as buses, you can write in comment line #5:
 ```
 bus: DB[15:0] VCTR[10:0] NVCTR[10:0]
@@ -114,13 +114,25 @@ bus: DB[15:0] VCTR[10:0] NVCTR[10:0]
 
 ### Sheet's title block fields
 
-Fields "Date", "Revision", "Title" and "Company" should not be left empty because the KiCad netlist generator does not write an empty string by default.
+Fields "Date", "Revision", "Title" and "Company" should not be left empty because, by default, the KiCad netlist generator does not append an empty string next to these field.\
+This prevents the netlist converter tool from running correctly (it will throw a syntax error).
 
 ### PLA structures
 
-The tool conveniently supports PLA structures by using NMOS "PULLUP" and NMOS "NOT_OC" symbols.
+The netlist converter tool conveniently supports PLA structures by using NMOS "PULLUP" and NMOS "NOT_OC" symbols.
 They get translated to this Verilog construct (note the inverted logic):
 ```
 assign <PLA out signal> = (<PLA in 1> | <PLA in 2> |... ) ? 1'b0 : 1'b1;
 ```
 The output wires of the PLA should be named, otherwise the assign statement will be invalid.
+
+### Hierarchical design
+
+The netlist converter tool does support hierarchical design but the result Verilog file shows a flattened design inside a unique module.\
+It is planned to have one Verilog module per sheet later on.
+
+### Labels
+
+Labels on the wires are useful to give a meaningful name for a Verilog wire. If a wire does not have a label, it gets the name of the output driving it. For PLAs, it is mandatory to specify a label for the output wires.\
+For the moment, hierarchical labels are mostly useful for KiCad hierarchical design. They are also useful to name Verilog wires. In the future, they will appear on the Verilog sub-modules interfaces.\
+Global labels will appear on the Verilog top level interface as external pins.
