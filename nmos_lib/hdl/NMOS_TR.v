@@ -4,7 +4,8 @@ module NMOS_TR
     input  C1,  // PHI1 clock
     input  C2,  // PHI2 clock
     input  T,   // Toggle input
-    output Q    // Register output
+    output Q,   // Register output
+    output Q_n  // Inverted output
 );
 
 `ifdef CLK_GEN
@@ -36,6 +37,7 @@ module NMOS_TR
         end
     end
 
-    assign Q  = _r_D_phi1;
+    assign Q   =  _r_D_phi1;
+    assign Q_n = ~_r_D_phi1;
 
 endmodule
