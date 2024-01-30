@@ -14,7 +14,7 @@ module NMOS_LB
     wire _clk = 1'b0;
 `endif
 
-    reg _r_D_phi2;
+    reg _r_D_phi2 /* verilator public */;
 
     always @(posedge _clk) begin : LOAD_PULSE
     

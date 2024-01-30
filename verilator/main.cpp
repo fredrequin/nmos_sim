@@ -1,12 +1,15 @@
 // Macros to build include file name
+#ifndef symbols_header
 #define _quoted_string(x) #x
 #define quoted_string(x) _quoted_string(x)
 #define _symbols_header(x) _quoted_string(x##__Syms.h)
 #define symbols_header(x) _symbols_header(x)
+#endif
 // Top level
 #include symbols_header(VM_PREFIX)
 // Helpers
 #include "../verilator_helpers/clock_gen/clock_gen.h"
+#include "alice_ff.h"
 
 #include <ctime>
 
@@ -19,8 +22,15 @@
 // Period for a ~143.181815 MHz clock
 #define PERIOD_NTSC_143MHz_ps      ((vluint64_t)6984)
 
+
+// Top level (global)
+VM_PREFIX* top;
+
 // Clocks generation (global)
 ClockGen *clk;
+
+// Chip registers access (global)
+ff_ptr_t *reg;
 
 int main(int argc, char **argv, char **env)
 {
@@ -86,8 +96,11 @@ int main(int argc, char **argv, char **env)
     }
 
     // Initialize top verilog instance
-    VM_PREFIX* top = new VM_PREFIX;
+    top = new VM_PREFIX;
     top->eval ();
+    
+    // Initialize the register access
+    reg = reg_ctor();
     
     // Initialize clock generator    
     clk = new ClockGen(1);
@@ -133,6 +146,11 @@ int main(int argc, char **argv, char **env)
 #endif /* VM_TRACE */
     }
     top->main_rst = 0;
+    
+    REG_WRITE(DDFSTRT, 0x0038);
+    REG_WRITE(DDFSTOP, 0x00D0);
+    REG_WRITE(DIWSTRT, 0x2C81);
+    REG_WRITE(DIWSTOP, 0x2CC1);
   
     // Simulation loop
     while (tb_time < max_time)
@@ -180,6 +198,9 @@ int main(int argc, char **argv, char **env)
 #endif /* VM_TRACE */
 
     top->final();
+    
+    reg_dtor(reg);
+    reg = nullptr;
     
     delete top;
     

@@ -17,6 +17,7 @@ EXE_FILE = V$(TOP_FILE)
 # C++ support files
 CPP_FILES =\
  $(HELPERS)/clock_gen/clock_gen.cpp\
+ alice_ff.cpp\
  main.cpp
 
 # Options for Verilator
@@ -63,7 +64,7 @@ verilate: $(OUT_CPP)/$(EXE_FILE)
 
 # Run simulation
 simulate: 
-	$(OUT_CPP)/$(EXE_FILE) +msec=33 +chip=ntsc
+	$(OUT_CPP)/$(EXE_FILE) +msec=35 +chip=ntsc
 
 # Convert Kicad netlist into Verilog
 Alice.v: $(DESIGN)/Alice.net
