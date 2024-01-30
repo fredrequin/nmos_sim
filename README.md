@@ -61,6 +61,14 @@ Top level testbench file containing the 28 MHz oscillator and Alice/Agnus chip
 
 Master verilog file that references other verilog files and configures the traces
 
+#### verilator/alice_ff.cpp
+
+C++ helper functions to allow direct write to the chip register flip-flops
+
+#### verilator/alice_ff.h
+
+Chip register flip-flops C++ mapping
+
 #### verilator/main.cpp
 
 C++ wrapper for Verilator
