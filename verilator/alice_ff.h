@@ -1,6 +1,24 @@
 #ifndef _ALICE_FF_H_
 #define _ALICE_FF_H_
 
+#define BPLCON0_FF\
+    nullptr,\
+    &top->Alice_tb->DUT->BPLCON0_LB1->_r_D_phi2,\
+    &top->Alice_tb->DUT->BPLCON0_LB2->_r_D_phi2,\
+    &top->Alice_tb->DUT->BPLCON0_LB3->_r_D_phi2,\
+    &top->Alice_tb->DUT->BPLCON0_LB4->_r_D_phi2,\
+    nullptr,\
+    &top->Alice_tb->DUT->BPLCON0_LB6->_r_D_phi2,\
+    nullptr,\
+    nullptr,\
+    nullptr,\
+    nullptr,\
+    nullptr,\
+    &top->Alice_tb->DUT->BPLCON0_LB12->_r_D_phi2,\
+    &top->Alice_tb->DUT->BPLCON0_LB13->_r_D_phi2,\
+    &top->Alice_tb->DUT->BPLCON0_LB14->_r_D_phi2,\
+    &top->Alice_tb->DUT->BPLCON0_LB15->_r_D_phi2
+
 #define DDFSTRT_FF\
     nullptr,\
     &top->Alice_tb->DUT->DFS_CMP2->_r_D_phi2,\
@@ -307,8 +325,27 @@
     nullptr,\
     nullptr
 
+#define FMODE_FF\
+    &top->Alice_tb->DUT->FMODE_LD0->_r_D_phi2,\
+    &top->Alice_tb->DUT->FMODE_LD1->_r_D_phi2,\
+    &top->Alice_tb->DUT->FMODE_LD2->_r_D_phi2,\
+    &top->Alice_tb->DUT->FMODE_LD3->_r_D_phi2,\
+    nullptr,\
+    nullptr,\
+    nullptr,\
+    nullptr,\
+    nullptr,\
+    nullptr,\
+    nullptr,\
+    nullptr,\
+    nullptr,\
+    nullptr,\
+    nullptr,\
+    nullptr
+
 typedef struct
 {
+    vluint8_t *BPLCON0[16];
     vluint8_t *DDFSTRT[16];
     vluint8_t *DDFSTOP[16];
     vluint8_t *DIWSTRT[16];
@@ -326,6 +363,7 @@ typedef struct
     vluint8_t *VSSTRT[16];
     vluint8_t *VSSTOP[16];
     vluint8_t *VTOTAL[16];
+    vluint8_t *FMODE[16];
 } ff_ptr_t;
 
 ff_ptr_t *reg_ctor(void);

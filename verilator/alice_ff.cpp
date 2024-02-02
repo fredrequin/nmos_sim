@@ -22,6 +22,7 @@ ff_ptr_t *reg_ctor(void)
     ff_ptr_t *p = new ff_ptr_t;
     *p =
     {
+        { BPLCON0_FF },
         { DDFSTRT_FF },
         { DDFSTOP_FF },
         { DIWSTRT_FF },
@@ -38,7 +39,8 @@ ff_ptr_t *reg_ctor(void)
         { VBSTOP_FF },
         { VSSTRT_FF },
         { VSSTOP_FF },
-        { VTOTAL_FF }
+        { VTOTAL_FF },
+        { FMODE_FF }
     };
     return p;
 }
