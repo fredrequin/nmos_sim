@@ -4,7 +4,8 @@ module NMOS_LD3R
     input  C1,  // PHI1 clock
     input  D,   // Data input
     input  LD,  // Load input
-    output Q    // Register output
+    output Q,   // Register output
+    output Q_n
 );
 
 `ifdef CLK_GEN
@@ -35,5 +36,6 @@ module NMOS_LD3R
     end
 
     assign Q   =  _r_D_phi1;
+    assign Q_n = ~_r_D_phi1;
 
 endmodule

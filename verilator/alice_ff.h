@@ -3,21 +3,21 @@
 
 #define BPLCON0_FF\
     nullptr,\
-    &top->Alice_tb->DUT->BPLCON0_LB1->_r_D_phi2,\
-    &top->Alice_tb->DUT->BPLCON0_LB2->_r_D_phi2,\
-    &top->Alice_tb->DUT->BPLCON0_LB3->_r_D_phi2,\
-    &top->Alice_tb->DUT->BPLCON0_LB4->_r_D_phi2,\
+    &top->Alice_tb->DUT->BPLCON0_LD1->_r_D_phi2,\
+    &top->Alice_tb->DUT->BPLCON0_LD2->_r_D_phi2,\
+    &top->Alice_tb->DUT->BPLCON0_LD3->_r_D_phi2,\
+    &top->Alice_tb->DUT->BPLCON0_LD4->_r_D_phi2,\
     nullptr,\
-    &top->Alice_tb->DUT->BPLCON0_LB6->_r_D_phi2,\
-    nullptr,\
-    nullptr,\
+    &top->Alice_tb->DUT->BPLCON0_LD6->_r_D_phi2,\
     nullptr,\
     nullptr,\
     nullptr,\
-    &top->Alice_tb->DUT->BPLCON0_LB12->_r_D_phi2,\
-    &top->Alice_tb->DUT->BPLCON0_LB13->_r_D_phi2,\
-    &top->Alice_tb->DUT->BPLCON0_LB14->_r_D_phi2,\
-    &top->Alice_tb->DUT->BPLCON0_LB15->_r_D_phi2
+    nullptr,\
+    nullptr,\
+    &top->Alice_tb->DUT->BPLCON0_LD12->_r_D_phi2,\
+    &top->Alice_tb->DUT->BPLCON0_LD13->_r_D_phi2,\
+    &top->Alice_tb->DUT->BPLCON0_LD14->_r_D_phi2,\
+    &top->Alice_tb->DUT->BPLCON0_LD15->_r_D_phi2
 
 #define DDFSTRT_FF\
     nullptr,\
