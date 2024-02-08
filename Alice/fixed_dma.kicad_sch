@@ -5883,7 +5883,7 @@
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid bd38ec15-c6f4-4b8c-9983-b94dd89ea5cf)
   )
-  (hierarchical_label "DRB[8..1]" (shape output) (at 256.54 332.74 0)
+  (hierarchical_label "DRB[8..1]" (shape input) (at 256.54 332.74 0)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid c81f86e4-e498-4342-b005-11b10dae9ca7)
   )
