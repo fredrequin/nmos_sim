@@ -127,6 +127,42 @@
     &top->Alice_tb->DUT->BEAMCON0_LB14->_r_D_phi2,\
     nullptr
 
+#define COPIR1_FF\
+    &top->Alice_tb->DUT->CIR1_LD0->_r_D_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP1->_r_Q_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP2->_r_Q_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP3->_r_Q_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP4->_r_Q_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP5->_r_Q_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP6->_r_Q_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP7->_r_Q_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP8->_r_Q_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP9->_r_Q_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP10->_r_Q_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP11->_r_Q_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP12->_r_Q_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP13->_r_Q_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP14->_r_Q_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP15->_r_Q_phi2
+
+#define COPIR2_FF\
+    &top->Alice_tb->DUT->CIR2_LD0->_r_D_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP1->_r_M_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP2->_r_M_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP3->_r_M_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP4->_r_M_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP5->_r_M_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP6->_r_M_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP7->_r_M_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP8->_r_M_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP9->_r_M_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP10->_r_M_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP11->_r_M_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP12->_r_M_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP13->_r_M_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP14->_r_M_phi2,\
+    &top->Alice_tb->DUT->CIR_CMP15->_r_M_phi2
+
 #define HBSTRT_FF\
     &top->Alice_tb->DUT->HBS_CMP1->_r_D_phi2,\
     &top->Alice_tb->DUT->HBS_CMP2->_r_D_phi2,\
@@ -352,6 +388,8 @@ typedef struct
     vluint8_t *DIWSTOP[16];
     vluint8_t *DIWHIGH[16];
     vluint8_t *BEAMCON0[16];
+    vluint8_t *COPIR1[16];
+    vluint8_t *COPIR2[16];
     vluint8_t *HBSTRT[16];
     vluint8_t *HBSTOP[16];
     vluint8_t *HSSTRT[16];

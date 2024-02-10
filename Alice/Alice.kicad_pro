@@ -434,6 +434,10 @@
     [
       "b358eb29-6d9d-43a4-86bf-b8c787a94241",
       "plane_dma"
+    ],
+    [
+      "551c5c57-75b0-4b5c-bcd4-dbafe27adef8",
+      "copper_dma"
     ]
   ],
   "text_variables": {}

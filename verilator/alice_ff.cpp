@@ -29,6 +29,8 @@ ff_ptr_t *reg_ctor(void)
         { DIWSTOP_FF },
         { DIWHIGH_FF },
         { BEAMCON0_FF },
+        { COPIR1_FF },
+        { COPIR2_FF },
         { HBSTRT_FF },
         { HBSTOP_FF },
         { HSSTRT_FF },

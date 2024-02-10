@@ -152,7 +152,9 @@ int main(int argc, char **argv, char **env)
     REG_WRITE(DIWSTRT, 0x2C81);
     REG_WRITE(DIWSTOP, 0x2CC1);
     REG_WRITE(BPLCON0, 0x6000);
-  
+    REG_WRITE(COPIR1,  0x6401);
+    REG_WRITE(COPIR2,  0xFF01);
+
     // Simulation loop
     while (tb_time < max_time)
     {
