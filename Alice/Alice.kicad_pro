@@ -438,6 +438,10 @@
     [
       "551c5c57-75b0-4b5c-bcd4-dbafe27adef8",
       "copper_dma"
+    ],
+    [
+      "d2e104ed-7619-4961-83d3-3b27a4d95fde",
+      "dma_pointers"
     ]
   ],
   "text_variables": {}
